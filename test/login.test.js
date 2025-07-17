@@ -17,6 +17,35 @@ const postLogin = require('../fixtures/postLogin.json')
                 
             })
 
+            it('Deve retornar status 400, quando os campos de login ficarem vazios/ausentes', async () => {
+                const bodyLogin = { ...postLogin}
+                bodyLogin.username = "" 
+                bodyLogin.senha = ""
+
+                const response = await request (process.env.BASE_URL)
+                .post('/login')
+                .set('Content-Type', 'application/json')
+                .send(bodyLogin)
+
+                expect(response.status).to.equal(400)
+                
+            })
+
+            it ('Deve retornar 401 quando as credencias do usuario forem invalidas', async () => {
+                const bodyLogin = { ...postLogin}
+                bodyLogin.senha = 12346
+
+                const response = await request (process.env.BASE_URL)
+                .post('/login')
+                .set('content-type', 'application/json')
+                .send(bodyLogin)
+
+                expect(response.status).to.equal(401)
+
+            })
+            
+
         })
+
     })
         
