@@ -28,8 +28,22 @@ const postLogin = require('../fixtures/postLogin.json')
                 .send(bodyLogin)
 
                 expect(response.status).to.equal(400)
+                
+            })
+
+            it ('Deve retornar 401 quando as credencias do usuario forem invalidas', async () => {
+                const bodyLogin = { ...postLogin}
+                bodyLogin.senha = 12346
+
+                const response = await request (process.env.BASE_URL)
+                .post('/login')
+                .set('content-type', 'application/json')
+                .send(bodyLogin)
+
+                expect(response.status).to.equal(401)
 
             })
+            
 
         })
 
